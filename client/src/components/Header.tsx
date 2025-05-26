@@ -88,11 +88,11 @@ export function Header() {
                       <i className="fas fa-tachometer-alt mr-2"></i>
                       Dashboard
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLocation("/profile")}>
                       <i className="fas fa-user mr-2"></i>
                       Profile Settings
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
+                    <DropdownMenuItem onClick={() => setLocation("/billing")}>
                       <i className="fas fa-credit-card mr-2"></i>
                       Billing
                     </DropdownMenuItem>
