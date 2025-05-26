@@ -28,12 +28,31 @@ export default function Auth() {
   const handleGoogleSignIn = async () => {
     setIsLoading(true);
     try {
-      await signInWithGoogle();
-      // Firebase will handle the redirect automatically
+      const result = await signInWithGoogle();
+      if (result.user) {
+        toast({
+          title: "Welcome!",
+          description: "Successfully signed in with Google",
+        });
+        setLocation('/dashboard');
+      }
     } catch (error: any) {
+      console.error('Google sign in error:', error);
+      let errorMessage = "An error occurred during sign in";
+      
+      if (error.code === 'auth/popup-blocked') {
+        errorMessage = "Popup was blocked. Please allow popups and try again.";
+      } else if (error.code === 'auth/cancelled-popup-request') {
+        errorMessage = "Sign in was cancelled.";
+      } else if (error.code === 'auth/popup-closed-by-user') {
+        errorMessage = "Sign in popup was closed. Please try again.";
+      } else if (error.message) {
+        errorMessage = error.message;
+      }
+      
       toast({
         title: "Sign in failed",
-        description: error.message || "An error occurred during sign in",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
