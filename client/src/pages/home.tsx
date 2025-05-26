@@ -77,14 +77,14 @@ export default function Home() {
       <section className="bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 text-white py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Find Your Perfect Vehicle Deal with
+            Find Your Perfect Deal with
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400 ml-2">
-              AI-Powered Search
+              AI Search
             </span>
           </h1>
           <p className="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
-            Search across Copart, IAAI, Manheim, ADESA, and eBay Motors using natural language. 
-            Let AI find the best deals for you.
+            Search across Copart, IAAI, Manheim, ADESA, and eBay Motors using and
+            let AI find the best deals for you.
           </p>
 
           <SearchInterface onSearch={handleSearch} isLoading={isSearching} />

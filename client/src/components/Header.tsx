@@ -1,7 +1,12 @@
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useAuth } from "@/hooks/useAuth";
 import { logOut } from "@/lib/firebase";
 
@@ -12,9 +17,9 @@ export function Header() {
   const handleSignOut = async () => {
     try {
       await logOut();
-      setLocation('/');
+      setLocation("/");
     } catch (error) {
-      console.error('Sign out error:', error);
+      console.error("Sign out error:", error);
     }
   };
 
@@ -22,7 +27,10 @@ export function Header() {
     if (!user?.trialEndDate) return 0;
     const end = new Date(user.trialEndDate);
     const now = new Date();
-    return Math.max(0, Math.ceil((end.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
+    return Math.max(
+      0,
+      Math.ceil((end.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)),
+    );
   };
 
   return (
@@ -34,25 +42,12 @@ export function Header() {
             <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
               <i className="fas fa-car text-white text-sm"></i>
             </div>
-            <span className="text-xl font-bold text-slate-900">Car Auction AI</span>
+            <span className="text-xl font-bold text-slate-900">
+              Car Auction AI
+            </span>
           </Link>
 
-          {/* Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link 
-              href="/" 
-              className={`transition-colors ${location === '/' ? 'text-blue-500' : 'text-slate-600 hover:text-blue-500'}`}
-            >
-              Search
-            </Link>
-            <Link 
-              href="/dashboard" 
-              className={`transition-colors ${location === '/dashboard' ? 'text-blue-500' : 'text-slate-600 hover:text-blue-500'}`}
-            >
-              Dashboard
-            </Link>
-            <a href="#" className="text-slate-600 hover:text-blue-500 transition-colors">Pricing</a>
-          </nav>
+          {/* Navigation - Hidden for cleaner mobile-like design */}
 
           {/* User Menu */}
           <div className="flex items-center space-x-4">
@@ -67,11 +62,19 @@ export function Header() {
                 {/* User Dropdown */}
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="ghost" className="flex items-center space-x-3">
+                    <Button
+                      variant="ghost"
+                      className="flex items-center space-x-3"
+                    >
                       <Avatar className="w-8 h-8">
-                        <AvatarImage src={user.photoURL || undefined} alt={user.displayName || 'User'} />
+                        <AvatarImage
+                          src={user.photoURL || undefined}
+                          alt={user.displayName || "User"}
+                        />
                         <AvatarFallback>
-                          {user.displayName ? user.displayName.charAt(0).toUpperCase() : user.email?.charAt(0).toUpperCase()}
+                          {user.displayName
+                            ? user.displayName.charAt(0).toUpperCase()
+                            : user.email?.charAt(0).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
                       <span className="hidden md:block text-sm font-medium">
@@ -81,7 +84,7 @@ export function Header() {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuItem onClick={() => setLocation('/dashboard')}>
+                    <DropdownMenuItem onClick={() => setLocation("/dashboard")}>
                       <i className="fas fa-tachometer-alt mr-2"></i>
                       Dashboard
                     </DropdownMenuItem>
@@ -102,10 +105,10 @@ export function Header() {
               </>
             ) : (
               <div className="flex items-center space-x-3">
-                <Button variant="outline" onClick={() => setLocation('/auth')}>
+                <Button variant="outline" onClick={() => setLocation("/auth")}>
                   Sign In
                 </Button>
-                <Button onClick={() => setLocation('/auth')}>
+                <Button onClick={() => setLocation("/auth")}>
                   Start Free Trial
                 </Button>
               </div>

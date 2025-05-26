@@ -22,37 +22,31 @@ export function SearchInterface({ onSearch, isLoading }: SearchInterfaceProps) {
     "Toyota Camrys with hail damage under $10,000 in Texas",
     "BMW sedans under $15k with clean titles",
     "Trucks with minor damage in California",
-    "Honda Civics 2015-2020 nationwide"
+    "Honda Civics 2015-2020 nationwide",
   ];
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
       className="bg-gradient-to-br from-white to-blue-50 rounded-3xl p-8 shadow-2xl border border-blue-100"
     >
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-        className="text-center mb-6"
-      >
-        <h2 className="text-3xl font-bold text-slate-800 mb-2">Find Your Perfect Vehicle</h2>
-        <p className="text-slate-600">Search across multiple auction platforms using natural language</p>
-      </motion.div>
-
       <form onSubmit={handleSubmit} className="space-y-6">
-        <motion.div 
+        <motion.div
           className="relative"
           initial={{ scale: 0.95 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.3 }}
         >
-          <motion.i 
+          <motion.i
             className="fas fa-search absolute left-5 top-6 text-slate-400 text-xl"
             animate={{ rotate: isLoading ? 360 : 0 }}
-            transition={{ duration: 2, repeat: isLoading ? Infinity : 0, ease: "linear" }}
+            transition={{
+              duration: 2,
+              repeat: isLoading ? Infinity : 0,
+              ease: "linear",
+            }}
           ></motion.i>
           <Textarea
             value={query}
@@ -63,29 +57,30 @@ export function SearchInterface({ onSearch, isLoading }: SearchInterfaceProps) {
             disabled={isLoading}
           />
         </motion.div>
-        
+
         {/* Search Button */}
-        <motion.div 
-          className="flex justify-center mt-6"
+        <motion.div
+          className="flex justify-end mt-6"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
         >
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <Button 
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <Button
               type="submit"
               disabled={isLoading || !query.trim()}
               className="px-12 py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-2xl transition-all shadow-lg text-lg"
             >
               {isLoading ? (
                 <>
-                  <motion.i 
+                  <motion.i
                     className="fas fa-spinner mr-3"
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                   ></motion.i>
                   Searching...
                 </>
@@ -101,17 +96,33 @@ export function SearchInterface({ onSearch, isLoading }: SearchInterfaceProps) {
       </form>
 
       {/* Quick Filters */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
         className="mt-8 flex flex-wrap gap-3 justify-center"
       >
         {[
-          { icon: "fas fa-car-crash", text: "Salvage Vehicles", query: "Toyota Camrys with hail damage under $15,000 in Texas" },
-          { icon: "fas fa-dollar-sign", text: "Under $10k", query: "vehicles under $10,000" },
-          { icon: "fas fa-truck", text: "Pickup Trucks", query: "pickup trucks" },
-          { icon: "fas fa-calendar", text: "2020+", query: "2020 or newer vehicles" }
+          {
+            icon: "fas fa-car-crash",
+            text: "Salvage Vehicles",
+            query: "Toyota Camrys with hail damage under $15,000 in Texas",
+          },
+          {
+            icon: "fas fa-dollar-sign",
+            text: "Under $10k",
+            query: "vehicles under $10,000",
+          },
+          {
+            icon: "fas fa-truck",
+            text: "Pickup Trucks",
+            query: "pickup trucks",
+          },
+          {
+            icon: "fas fa-calendar",
+            text: "2020+",
+            query: "2020 or newer vehicles",
+          },
         ].map((filter, index) => (
           <motion.button
             key={index}
@@ -130,7 +141,7 @@ export function SearchInterface({ onSearch, isLoading }: SearchInterfaceProps) {
       </motion.div>
 
       {/* Search Suggestions */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
