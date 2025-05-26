@@ -1,0 +1,98 @@
+Project Overview:
+Build a SaaS application called Car Auction AI. This platform allows users to search for the best deals across multiple car auction databases (Copart, IAAI, Manheim, ADESA, eBay Motors) using a natural language search powered by LLMs (start with OpenAI GPT-4.1). The frontend should be built with React/Next.js. Use Firebase for authentication, and PostgreSQL for all persistent storage (including listings, user queries, and model outputs). Users can try the platform free for the first 6 months; paid subscriptions activate afterward.
+
+Features & Requirements:
+
+Natural Language Search (LLM-Powered):
+
+Users input queries in plain English (e.g. “Show me all Toyota Camrys with hail damage under $10,000 in Texas”).
+
+The app parses queries and translates them into structured filters for each auction site’s API.
+
+Return normalized, deduplicated, and ranked results from all available auction APIs.
+
+Auction API Integrations:
+
+Integrate the following APIs (with documented requirements):
+
+Copart (via third-party paid API, $200/month subscription)
+
+IAAI (official VehicleListing API via dealer registration, or via Copart-IAAI third-party API)
+
+Manheim (official ISWS API, requires dealer registration & API key)
+
+ADESA (via AuctionACCESS APIs; dealer registration required)
+
+eBay Motors (Finding & Browse APIs; requires OAuth2 via eBay Developer Program)
+
+Map and merge fields into a unified car listing schema (source, make, model, year, price, damage, location, auction date, link, images, etc.).
+
+Model & Annotation Pipeline:
+
+For MVP, use OpenAI GPT-4.1 for natural language understanding and orchestration.
+
+Prepare backend logic to support swap-in of future models (Anthropic, Gemini, etc.).
+
+Prepare for future fine-tuning using annotated auction data (Ahmad Allaou to help with data labeling, especially images).
+
+User Authentication & Management:
+
+Use Firebase Authentication (Google, email, etc.).
+
+Secure user data and store query history, favorites, and subscriptions in PostgreSQL.
+
+Frontend (React/Next.js):
+
+Clean, responsive UI for search, filters, and results grid.
+
+Allow users to save searches and receive alerts when new matching cars are found.
+
+Onboarding flow explaining the free trial (6 months), followed by paid plans.
+
+Backend:
+
+Orchestrate API calls, LLM parsing, and result merging.
+
+Store normalized car listings, search logs, and user actions in PostgreSQL.
+
+Sales Funnel:
+
+Implement free trial logic (6 months per user).
+
+After trial, prompt user to subscribe and unlock continued access.
+
+Scalability & Maintainability:
+
+Modular codebase: Each auction connector should be a separate service/class.
+
+LLM orchestration logic should be swappable (abstract model provider).
+
+Robust error handling for API rate limits, downtime, and data consistency.
+
+Sample Table for API Reference:
+(Include as comment in codebase for devs to reference integration requirements.)
+
+Name	API Availability	Documentation	Requirements	Notes
+Copart	Third-Party API	https://copart-iaai-api.com/copart-iaai	$200/month Subscription	No formal API available
+IAAI	VehicleListing API	https://www.iaai.com/Vehiclelisting/Vehiclelisting/Api	Dealer Registration	Third-party API for Copart includes IAAI
+Manheim	Inventory Search Web Service (ISWS)	https://developer.manheim.com/	Dealer Registration, API Key	Inventory, orders, consignments
+ADESA	AuctionACCESS APIs	Provided via AuctionACCESS PDF	Dealer Registration via AuctionACCESS	Vehicle availability, inspection endpoints
+eBay Motors	Finding & Browse APIs	https://developer.ebay.com/	eBay Developer Program, OAuth2	Registration required
+
+Additional Instructions for the AI Agent:
+
+Build with extensibility for additional sources and models.
+
+Code must be production-ready, clean, and commented.
+
+Prioritize rapid API prototyping and a modular architecture.
+
+All sensitive keys/configurations to be managed securely (env vars, Firebase secrets).
+
+Start by generating the following:
+
+A detailed folder structure for the codebase (frontend, backend, connectors, models, etc.).
+
+Example code stubs for API connector, LLM orchestration service, and UI search page.
+
+PostgreSQL schema for normalized car listing, user, and query tables.
