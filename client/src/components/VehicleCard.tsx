@@ -193,7 +193,14 @@ export function VehicleCard({ vehicle, isFavorite = false, onRemoveFavorite }: V
         <div className="flex space-x-3">
           <Button 
             className="flex-1" 
-            onClick={() => vehicle.auctionUrl && window.open(vehicle.auctionUrl, '_blank')}
+            onClick={() => {
+              if (vehicle.auctionUrl) {
+                window.open(vehicle.auctionUrl, '_blank', 'noopener,noreferrer');
+              } else {
+                alert('Auction link not available for this vehicle');
+              }
+            }}
+            disabled={!vehicle.auctionUrl}
           >
             <i className="fas fa-external-link-alt mr-2"></i>
             View Auction

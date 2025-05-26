@@ -53,9 +53,11 @@ export default function Home() {
       
       if (response.ok) {
         const results = await response.json();
+        console.log('Search API Response:', results);
         setSearchResults(results);
       } else {
         const error = await response.json();
+        console.error('Search API Error:', error);
         throw new Error(error.error || 'Search failed');
       }
     } catch (error: any) {

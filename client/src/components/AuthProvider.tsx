@@ -24,12 +24,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // If user signs in, create/update user in backend
       if (firebaseUser) {
         try {
-          await apiRequest('POST', '/api/users', {
+          const response = await apiRequest('POST', '/api/users', {
             firebaseUid: firebaseUser.uid,
             email: firebaseUser.email,
             displayName: firebaseUser.displayName,
             photoURL: firebaseUser.photoURL,
           });
+          console.log('User API Response:', response);
         } catch (error) {
           // User might already exist, which is fine
           console.log('User already exists or API error:', error);
