@@ -31,7 +31,14 @@ export default function Home() {
   });
 
   const handleSearch = async (query: string) => {
-    if (!user || !query.trim()) return;
+    if (!user || !query.trim()) {
+      if (!user) {
+        // Redirect to auth if not logged in
+        window.location.href = '/auth';
+        return;
+      }
+      return;
+    }
     
     setIsSearching(true);
     try {
@@ -47,9 +54,14 @@ export default function Home() {
       if (response.ok) {
         const results = await response.json();
         setSearchResults(results);
+      } else {
+        const error = await response.json();
+        throw new Error(error.error || 'Search failed');
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Search failed:', error);
+      // You could add a toast notification here for better UX
+      alert(`Search failed: ${error.message || 'Please try again'}`);
     } finally {
       setIsSearching(false);
     }

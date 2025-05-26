@@ -35,8 +35,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userData = req.body;
       const user = await storage.createUser(userData);
       res.json(user);
-    } catch (error) {
-      res.status(400).json({ error: error.message });
+    } catch (error: any) {
+      res.status(400).json({ error: error?.message || 'Failed to create user' });
     }
   });
 
@@ -63,7 +63,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.createSearchQuery({
         userId: req.user.id,
         query,
-        parsedFilters,
+        parsedFilters: parsedFilters as any,
         resultCount: vehicles.length,
       });
 
@@ -158,7 +158,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Search with saved filters
-      const vehicles = await auctionConnector.searchVehicles(savedSearch.parsedFilters);
+      const vehicles = await auctionConnector.searchVehicles(savedSearch.parsedFilters || {});
       
       // Update last run time
       await storage.updateSavedSearch(id, { lastRunAt: new Date() });

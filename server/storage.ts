@@ -203,7 +203,7 @@ export class DatabaseStorage implements IStorage {
     const result = await db
       .delete(savedSearches)
       .where(eq(savedSearches.id, id));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   // Favorites operations
@@ -222,7 +222,7 @@ export class DatabaseStorage implements IStorage {
         eq(userFavorites.userId, userId),
         eq(userFavorites.vehicleId, vehicleId)
       ));
-    return result.rowCount > 0;
+    return (result.rowCount || 0) > 0;
   }
 
   async getUserFavorites(userId: number): Promise<Vehicle[]> {
