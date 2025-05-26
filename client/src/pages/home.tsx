@@ -170,7 +170,7 @@ export default function Home() {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {savedSearches.slice(0, 3).map((search: any) => (
+              {Array.isArray(savedSearches) && savedSearches.slice(0, 3).map((search: any) => (
                 <Card key={search.id} className="cursor-pointer hover:shadow-md transition-shadow">
                   <CardContent className="p-4">
                     <h4 className="font-medium text-slate-900 mb-2">{search.name}</h4>
