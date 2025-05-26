@@ -62,20 +62,28 @@ export function SearchInterface({ onSearch, isLoading }: SearchInterfaceProps) {
             rows={3}
             disabled={isLoading}
           />
+        </motion.div>
+        
+        {/* Search Button */}
+        <motion.div 
+          className="flex justify-center mt-6"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.4 }}
+        >
           <motion.div
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="absolute right-3 bottom-3"
           >
             <Button 
               type="submit"
               disabled={isLoading || !query.trim()}
-              className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all shadow-lg"
+              className="px-12 py-4 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-2xl transition-all shadow-lg text-lg"
             >
               {isLoading ? (
                 <>
                   <motion.i 
-                    className="fas fa-spinner mr-2"
+                    className="fas fa-spinner mr-3"
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                   ></motion.i>
@@ -83,7 +91,7 @@ export function SearchInterface({ onSearch, isLoading }: SearchInterfaceProps) {
                 </>
               ) : (
                 <>
-                  <i className="fas fa-magic mr-2"></i>
+                  <i className="fas fa-magic mr-3"></i>
                   Search with AI
                 </>
               )}
