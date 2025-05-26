@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { motion } from "framer-motion";
 
 interface SearchInterfaceProps {
   onSearch: (query: string) => void;
@@ -25,79 +26,123 @@ export function SearchInterface({ onSearch, isLoading }: SearchInterfaceProps) {
   ];
 
   return (
-    <div className="bg-white rounded-2xl p-6 shadow-2xl">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="relative">
-          <i className="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400"></i>
+    <motion.div 
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="bg-gradient-to-br from-white to-blue-50 rounded-3xl p-8 shadow-2xl border border-blue-100"
+    >
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.2 }}
+        className="text-center mb-6"
+      >
+        <h2 className="text-3xl font-bold text-slate-800 mb-2">Find Your Perfect Vehicle</h2>
+        <p className="text-slate-600">Search across multiple auction platforms using natural language</p>
+      </motion.div>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <motion.div 
+          className="relative"
+          initial={{ scale: 0.95 }}
+          animate={{ scale: 1 }}
+          transition={{ delay: 0.3 }}
+        >
+          <motion.i 
+            className="fas fa-search absolute left-5 top-6 text-slate-400 text-xl"
+            animate={{ rotate: isLoading ? 360 : 0 }}
+            transition={{ duration: 2, repeat: isLoading ? Infinity : 0, ease: "linear" }}
+          ></motion.i>
           <Textarea
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Try: 'Show me Toyota Camrys with hail damage under $15,000 in Texas'"
-            className="w-full pl-12 pr-4 py-4 text-slate-900 text-lg border-0 rounded-xl bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all resize-none"
+            className="w-full pl-14 pr-4 py-6 text-slate-900 text-lg border-2 border-slate-200 rounded-2xl bg-white focus:bg-white focus:ring-4 focus:ring-blue-200 focus:border-blue-400 focus:outline-none transition-all resize-none shadow-inner"
             rows={3}
             disabled={isLoading}
           />
-          <Button 
-            type="submit"
-            disabled={isLoading || !query.trim()}
-            className="absolute right-3 bottom-3 px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-xl transition-colors"
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="absolute right-3 bottom-3"
           >
-            {isLoading ? (
-              <>
-                <i className="fas fa-spinner fa-spin mr-2"></i>
-                Searching...
-              </>
-            ) : (
-              <>
-                <i className="fas fa-magic mr-2"></i>
-                Search with AI
-              </>
-            )}
-          </Button>
-        </div>
+            <Button 
+              type="submit"
+              disabled={isLoading || !query.trim()}
+              className="px-8 py-3 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-semibold rounded-xl transition-all shadow-lg"
+            >
+              {isLoading ? (
+                <>
+                  <motion.i 
+                    className="fas fa-spinner mr-2"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  ></motion.i>
+                  Searching...
+                </>
+              ) : (
+                <>
+                  <i className="fas fa-magic mr-2"></i>
+                  Search with AI
+                </>
+              )}
+            </Button>
+          </motion.div>
+        </motion.div>
       </form>
 
       {/* Quick Filters */}
-      <div className="mt-6 flex flex-wrap gap-3 justify-center">
-        <button 
-          onClick={() => setQuery("Toyota Camrys with hail damage under $15,000 in Texas")}
-          className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition-colors"
-        >
-          <i className="fas fa-car-crash mr-2"></i>Salvage Vehicles
-        </button>
-        <button 
-          onClick={() => setQuery("vehicles under $10,000")}
-          className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition-colors"
-        >
-          <i className="fas fa-dollar-sign mr-2"></i>Under $10k
-        </button>
-        <button 
-          onClick={() => setQuery("pickup trucks")}
-          className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition-colors"
-        >
-          <i className="fas fa-truck mr-2"></i>Pickup Trucks
-        </button>
-        <button 
-          onClick={() => setQuery("2020 or newer vehicles")}
-          className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-medium transition-colors"
-        >
-          <i className="fas fa-calendar mr-2"></i>2020+
-        </button>
-      </div>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.4 }}
+        className="mt-8 flex flex-wrap gap-3 justify-center"
+      >
+        {[
+          { icon: "fas fa-car-crash", text: "Salvage Vehicles", query: "Toyota Camrys with hail damage under $15,000 in Texas" },
+          { icon: "fas fa-dollar-sign", text: "Under $10k", query: "vehicles under $10,000" },
+          { icon: "fas fa-truck", text: "Pickup Trucks", query: "pickup trucks" },
+          { icon: "fas fa-calendar", text: "2020+", query: "2020 or newer vehicles" }
+        ].map((filter, index) => (
+          <motion.button
+            key={index}
+            onClick={() => setQuery(filter.query)}
+            className="px-6 py-3 bg-white hover:bg-blue-50 text-slate-700 hover:text-blue-600 rounded-xl text-sm font-medium transition-all shadow-md hover:shadow-lg border border-slate-200 hover:border-blue-300"
+            whileHover={{ scale: 1.05, y: -2 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 + index * 0.1 }}
+          >
+            <i className={`${filter.icon} mr-2 text-blue-500`}></i>
+            {filter.text}
+          </motion.button>
+        ))}
+      </motion.div>
 
       {/* Search Suggestions */}
-      <div className="mt-4 text-center">
-        <span className="text-sm text-slate-500 mr-2">Quick searches:</span>
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+        className="mt-6 text-center"
+      >
+        <span className="text-sm text-slate-500 mr-3">Popular searches:</span>
         {quickSearches.slice(0, 2).map((suggestion, index) => (
-          <button
+          <motion.button
             key={index}
             onClick={() => setQuery(suggestion)}
-            className="text-sm text-blue-500 hover:text-blue-700 underline mr-4"
+            className="text-sm text-blue-500 hover:text-blue-700 underline mr-4 transition-colors"
+            whileHover={{ scale: 1.05 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1 + index * 0.2 }}
           >
             "{suggestion.substring(0, 30)}..."
-          </button>
+          </motion.button>
         ))}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
