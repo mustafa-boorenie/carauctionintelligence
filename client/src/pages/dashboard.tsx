@@ -149,7 +149,7 @@ export default function Dashboard() {
           <TabsContent value="searches" className="space-y-6">
             <div className="flex justify-between items-center">
               <h2 className="text-2xl font-bold text-slate-900">Saved Searches</h2>
-              <Button>
+              <Button onClick={() => window.location.href = '/'}>
                 <i className="fas fa-plus mr-2"></i>
                 New Search
               </Button>
