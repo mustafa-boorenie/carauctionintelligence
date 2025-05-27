@@ -1,5 +1,5 @@
 import { Header } from "@/components/Header";
-import { useLocation } from "wouter";
+import { useLocation, useNavigate } from "wouter";
 import { VehicleCard } from "@/components/VehicleCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -13,6 +13,7 @@ export default function Dashboard() {
   const { user } = useAuth();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const [location, setLocation] = useLocation();
 
   const { data: savedSearches = [] } = useQuery({
     queryKey: ["/api/saved-searches"],
@@ -175,7 +176,7 @@ export default function Dashboard() {
               <h2 className="text-2xl font-bold text-slate-900">
                 Saved Searches
               </h2>
-              <Button onClick={() => setLocation("/billing")}>
+              <Button onClick={() => setLocation("/")}>
                 <i className="fas fa-plus mr-2"></i>
                 New Search
               </Button>
